@@ -1,28 +1,23 @@
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
+
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
      // unit testing (required)
-     public static void main(String[] args){
-
+    public static void main(String[] args){
+        RandomizedQueue<Item> rq = new RandomizedQueue<>();
+        Item
+        rq.enqueue(new Item("hello"));
     }
 
+    private Item[] items = (Item[]) new Object[50];
     private int size = 0;
-    private Item first = null;
-    private Item last = null;
-
-    private static class Item {
-        private Item next;
-        private Item prev;
-        private String data;
-        public Item (String newData){
-            this.data = newData;
-        }
-
-    }
+    
     // construct an empty randomized queue
     public RandomizedQueue(){
 
@@ -40,10 +35,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // add the item
     public void enqueue(Item item){
+        
         if(item == null){
             throw new IllegalArgumentException("can't enqueue with a null item");
         }else{
-
+            items[size] = item;
+            size ++;
         }
     }
 
@@ -52,7 +49,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if(size == 0){
             throw new NoSuchElementException("can't dequeue if the queue is empty");
         }else{
+            
+            int i = StdRandom.uniform(size);
+            Item copy = items[i];
+            items[i] = items[size - 1];
+            items[size - 1] = null;
 
+            return copy;
         }
     }
 
@@ -61,14 +64,44 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if(size == 0){
             throw new NoSuchElementException("can't dequeue if the queue is empty");
         }else{
-
+            int i = StdRandom.uniform(size);
+            return this.items[i];
         }
     }
 
     // return an independent iterator over items in random order
     public Iterator<Item> iterator(){
-
+        return new ItemIterator();
+        
     }
+
+    private class ItemIterator implements Iterator<Item>{
+        private int i;
+
+        public boolean hasNext() {
+            return items[i] != null;
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        public Item next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            } else {
+                Item item = items[i++];
+                return item;
+            }
+        }
+    }
+
+    /*private void resize(int capacity) {
+        Item[] copy = (Item[]) new Object[capacity];
+        for (int i = 0; i < size; i++)
+            copy[i] = items[i];
+        items = copy;
+    }*/
 
    
 
