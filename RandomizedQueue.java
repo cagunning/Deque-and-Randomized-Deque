@@ -1,5 +1,4 @@
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
@@ -10,9 +9,24 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
      // unit testing (required)
     public static void main(String[] args){
-        RandomizedQueue<Item> rq = new RandomizedQueue<>();
-        Item
-        rq.enqueue(new Item("hello"));
+        RandomizedQueue<String> s = new RandomizedQueue<>();
+
+        
+        String str = "abc";
+        String abc = "efg";
+
+        s.enqueue(str);
+        System.out.println(s.isEmpty());
+        System.out.println(s.size());
+        s.enqueue(abc);
+        s.enqueue(abc);
+        s.dequeue();
+        System.out.println(s.sample());
+        s.enqueue(abc);
+
+        s.iterator();    
+
+        
     }
 
     private Item[] items = (Item[]) new Object[50];
@@ -20,7 +34,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     
     // construct an empty randomized queue
     public RandomizedQueue(){
-
+        
     }
 
     // is the randomized queue empty?
@@ -54,7 +68,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             Item copy = items[i];
             items[i] = items[size - 1];
             items[size - 1] = null;
-
+            
             return copy;
         }
     }
@@ -96,13 +110,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
     }
 
-    /*private void resize(int capacity) {
-        Item[] copy = (Item[]) new Object[capacity];
-        for (int i = 0; i < size; i++)
-            copy[i] = items[i];
-        items = copy;
-    }*/
-
-   
+  
 
 }
+
+
